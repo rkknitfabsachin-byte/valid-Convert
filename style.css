@@ -1,25 +1,147 @@
+/* ---------------- ROOT THEMES ---------------- */
+:root {
+  --bg: #f5f5f7;
+  --card: #ffffff;
+  --text: #1d1d1f;
+  --subtext: #6e6e73;
+  --accent: #007aff;
+  --valid: #34c759;
+  --convert: #ff9f0a;
+  --shadow: rgba(0,0,0,0.08);
+}
+
+body.dark {
+  --bg: #0f0f12;
+  --card: #1c1c1e;
+  --text: #f5f5f7;
+  --subtext: #a1a1a6;
+  --shadow: rgba(0,0,0,0.4);
+}
+
+/* ---------------- GLOBAL ---------------- */
 body {
-  font-family: Arial, sans-serif;
-  background: #f6f7fb;
-  padding: 20px;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
+/* ---------------- NAVBAR ---------------- */
+.nav {
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.7);
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 20px;
+  box-shadow: 0 4px 20px var(--shadow);
+  z-index: 10;
 }
 
-th, td {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+body.dark .nav {
+  background: rgba(28,28,30,0.8);
 }
 
-button {
-  padding: 6px 10px;
+.nav-item {
+  margin-right: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  opacity: 0.6;
+}
+
+.nav-item.active {
+  opacity: 1;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 4px;
+}
+
+#themeToggle {
   border: none;
+  background: transparent;
+  font-size: 18px;
   cursor: pointer;
 }
 
-.valid { background: #4caf50; color: white; }
-.convert { background: #ff9800; color: white; }
+/* ---------------- SEARCH ---------------- */
+.search-box {
+  padding: 16px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: none;
+  font-size: 16px;
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+/* ---------------- CARDS ---------------- */
+#cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  padding: 16px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 10px 30px var(--shadow);
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease;
+}
+
+.card h3 {
+  margin: 0 0 6px 0;
+}
+
+.card p {
+  margin: 4px 0;
+  color: var(--subtext);
+  font-size: 14px;
+}
+
+/* ---------------- ACTIONS ---------------- */
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.actions button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 14px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.valid-btn {
+  background: var(--valid);
+  color: white;
+}
+
+.convert-btn {
+  background: var(--convert);
+  color: white;
+}
+
+/* ---------------- ANIMATIONS ---------------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-out {
+  animation: fadeOut 0.3s ease forwards;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; transform: translateY(-10px); }
+}
