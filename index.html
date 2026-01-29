@@ -1,27 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>Customer Activity</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-<h2>Customer Activity Dashboard</h2>
+  <!-- Top Navigation -->
+  <header class="nav">
+    <div class="nav-item active" data-tab="Visitor">Visitor</div>
+    <div class="nav-item" data-tab="Enquiry">Enquiry</div>
+    <div class="nav-item" data-tab="Courier">Courier</div>
+  </header>
 
-<table id="data">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Phone</th>
-      <th>Source</th>
-      <th>Purpose</th>
-      <th>Valid</th>
-      <th>Convert</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+  <!-- Search -->
+  <div class="search-box">
+    <input type="text" id="search" placeholder="Search name, phone, company…" />
+  </div>
 
-<script src="app.js"></script>
+  <!-- Cards Container -->
+  <main id="cards"></main>
+
+  <script src="app.js"></script>
 </body>
 </html>
