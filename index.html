@@ -8,25 +8,29 @@
 </head>
 <body>
 
-  <!-- Top Glass Navbar -->
+  <!-- NAVBAR -->
   <header class="nav">
     <div class="nav-left">
       <span class="nav-item active" data-tab="Visitor">Visitor</span>
       <span class="nav-item" data-tab="Enquiry">Enquiry</span>
       <span class="nav-item" data-tab="Courier">Courier</span>
     </div>
-
     <div class="nav-right">
       <button id="themeToggle">🌙</button>
     </div>
   </header>
 
-  <!-- Search -->
+  <!-- SEARCH + REFRESH -->
   <div class="search-box">
-    <input type="text" id="search" placeholder="Search name, phone, company…" />
+    <input
+      type="text"
+      id="search"
+      placeholder="Search name, phone, company…"
+    />
+    <button id="refreshBtn">⟳ Refresh</button>
   </div>
 
-  <!-- Cards -->
+  <!-- CARDS -->
   <main id="cards"></main>
 
   <script src="app.js"></script>
