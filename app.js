@@ -1,32 +1,69 @@
-const API = 'https://script.google.com/macros/s/AKfycbwijIoixvyjj6GxZcq91ZlidiXzHa7dmhoU1kgB86L2zdibhvF9WSmzVAD6r34qU0Ej/exec';
+let currentTab = 'Visitor';
+let data = [];
 
-fetch(`${API}?action=getData`)
-  .then(r => r.json())
-  .then(render);
+/* --------- THEME TOGGLE --------- */
+const toggle = document.getElementById('themeToggle');
+toggle.onclick = () => {
+  document.body.classList.toggle('dark');
+  toggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+};
 
-function render(rows) {
-  const body = document.querySelector('#data tbody');
-  body.innerHTML = '';
+/* --------- TAB SWITCH --------- */
+document.querySelectorAll('.nav-item').forEach(tab => {
+  tab.onclick = () => {
+    document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentTab = tab.dataset.tab;
+    render();
+  };
+});
 
-  rows.forEach(r => {
-    const tr = document.createElement('tr');
+/* --------- SEARCH --------- */
+document.getElementById('search').oninput = render;
 
-    tr.innerHTML = `
-      <td>${r.name || ''}</td>
-      <td>${r.phone || ''}</td>
-      <td>${r.source}</td>
-      <td>${r.purpose || ''}</td>
-      <td><button class="valid" onclick="update('${r.id}','Valid','')">Valid</button></td>
-      <td><button class="convert" onclick="update('${r.id}','','Convert')">Convert</button></td>
-    `;
+/* --------- RENDER --------- */
+function render() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const container = document.getElementById('cards');
+  container.innerHTML = '';
 
-    body.appendChild(tr);
-  });
+  data
+    .filter(d => d.source === currentTab)
+    .filter(d => !d.CONVERT)
+    .filter(d =>
+      (d.name + d.phone + d.company).toLowerCase().includes(q)
+    )
+    .forEach(d => {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      card.innerHTML = `
+        <h3>${d.name || ''}</h3>
+        <p>📞 ${d.phone || ''}</p>
+        <p>🏢 ${d.company || ''}</p>
+        <p>🎯 ${d.purpose || ''}</p>
+        <p>📍 ${d.location || ''}</p>
+
+        <div class="actions">
+          <button class="valid-btn">✓ VALID</button>
+          <button class="convert-btn">★ CONVERT</button>
+        </div>
+      `;
+
+      card.querySelector('.convert-btn').onclick = () => {
+        card.classList.add('fade-out');
+        setTimeout(() => card.remove(), 300);
+        // later → API call
+      };
+
+      container.appendChild(card);
+    });
 }
 
-function update(id, VALID, CONVERT) {
-  fetch(API, {
-    method: 'POST',
-    body: JSON.stringify({ id, VALID, CONVERT })
-  }).then(() => location.reload());
-}
+/* --------- TEMP DEMO DATA --------- */
+data = [
+  { source:'Visitor', name:'Amit', phone:'99999', company:'RK Knit Fab', purpose:'Meeting', location:'Surat', VALID:'', CONVERT:'' },
+  { source:'Enquiry', name:'Rahul', phone:'88888', company:'XYZ', purpose:'Order', location:'Mumbai', VALID:'', CONVERT:'' }
+];
+
+render();
